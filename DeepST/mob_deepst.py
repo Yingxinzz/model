@@ -200,23 +200,23 @@ import anndata as ad
 multiple_adata.write("../Results/multiple_adata_mob.h5ad")
 multiple_adata = ad.read_h5ad("../Results/multiple_adata_mob.h5ad")
 
-#绘制批次校正后的umap图
-fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
-sc.pp.neighbors(multiple_adata, use_rep='DeepST_embed',random_state=666) 
-sc.tl.umap(multiple_adata,random_state=666)
-sc.pl.umap(multiple_adata, color='batch_name', ax=ax_list[0], title='Batch corrected', show=False)
-sc.pl.umap(multiple_adata, color='DeepST_refine_domain', ax=ax_list[1], title='Colored by clusters', show=False)
-# sc.pp.neighbors(multiple_adata, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
-# sc.tl.umap(multiple_adata,random_state=666)
-# sc.pl.umap(multiple_adata, color='batch_name', title='Uncorrected', ax=ax_list[0], show=False)
-plt.tight_layout(w_pad=0.05)
-plt.savefig(os.path.join(save_path, '3mob_umap.pdf'), bbox_inches='tight', dpi=600)
+# # #绘制批次校正后的umap图
+# # fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
+# # sc.pp.neighbors(multiple_adata, use_rep='DeepST_embed',random_state=666) 
+# # sc.tl.umap(multiple_adata,random_state=666)
+# # sc.pl.umap(multiple_adata, color='batch_name', ax=ax_list[0], title='Batch corrected', show=False)
+# # sc.pl.umap(multiple_adata, color='DeepST_refine_domain', ax=ax_list[1], title='Colored by clusters', show=False)
+# # # sc.pp.neighbors(multiple_adata, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
+# # # sc.tl.umap(multiple_adata,random_state=666)
+# # # sc.pl.umap(multiple_adata, color='batch_name', title='Uncorrected', ax=ax_list[0], show=False)
+# # plt.tight_layout(w_pad=0.05)
+# # plt.savefig(os.path.join(save_path, '3mob_umap.pdf'), bbox_inches='tight', dpi=600)
 
-#用scib进行基准测试
-import scib
-scib.me.graph_connectivity(multiple_adata, label_key="celltype")
-scib.me.ilisi_graph(multiple_adata, batch_key="batch_name",type_="embed",use_rep="DeepST_embed")
-scib.me.ilisi_graph(multiple_adata, batch_key="batch_name", type_="embed", use_rep="X_umap")
-scib.me.ilisi_graph(multiple_adata, batch_key="batch_name",type_="KNN")
-scib.me.kBET(multiple_adata, batch_key="batch_name", label_key="celltype", type_="embed", embed="DeepST_embed")
-scib.me.silhouette_batch(multiple_adata, batch_key="batch_name", label_key="DeepST_refine_domain", embed="DeepST_embed")#绘制每个数据集的空间图
+# # #用scib进行基准测试
+# # import scib
+# # scib.me.graph_connectivity(multiple_adata, label_key="celltype")
+# # scib.me.ilisi_graph(multiple_adata, batch_key="batch_name",type_="embed",use_rep="DeepST_embed")
+# # scib.me.ilisi_graph(multiple_adata, batch_key="batch_name", type_="embed", use_rep="X_umap")
+# # scib.me.ilisi_graph(multiple_adata, batch_key="batch_name",type_="KNN")
+# # scib.me.kBET(multiple_adata, batch_key="batch_name", label_key="celltype", type_="embed", embed="DeepST_embed")
+# # scib.me.silhouette_batch(multiple_adata, batch_key="batch_name", label_key="DeepST_refine_domain", embed="DeepST_embed")#绘制每个数据集的空间图

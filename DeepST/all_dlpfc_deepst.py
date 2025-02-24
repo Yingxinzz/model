@@ -10,8 +10,6 @@ import pandas as pd
 import anndata as ad
 import warnings
 warnings.filterwarnings("ignore")
-
-#data_name_list = ['151673', '151674', '151675', '151676','151507', '151508', '151509', '151510','151669', '151670','151671', '151672']
 data_path = '../../RAW_SLICE/DLPFC/'
 data_name_list =['151673','151669','151507']
 save_path = "../Results" 
@@ -63,30 +61,24 @@ multiple_adata.write("../Results/all_multiple_adata.h5ad")
 multiple_adata = ad.read_h5ad("../Results/all_multiple_adata.h5ad")
 
 
-#绘制批次校正后的umap图
-fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
-# sc.pp.neighbors(multiple_adata, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
-# sc.tl.umap(multiple_adata,random_state=666)
-# sc.pl.umap(multiple_adata, color='sample_name', title='Uncorrected', ax=ax_list[0], show=False)
-sc.pp.neighbors(multiple_adata, use_rep='DeepST_embed',random_state=666) 
-sc.tl.umap(multiple_adata,random_state=666)
-sc.pl.umap(multiple_adata, color='sample_name', ax=ax_list[0], title='Batch corrected', show=False)
-sc.pl.umap(multiple_adata, color='DeepST_refine_domain', ax=ax_list[1], title='Colored by clusters', show=False)
-sc.pl.umap(multiple_adata, color='ground_truth', ax=ax_list[2], title='celltype', show=False)
-plt.tight_layout(w_pad=0.05)
-#plt.savefig(os.path.join(save_path, f'{"_".join(data_name_list)}_umap.pdf'), bbox_inches='tight', dpi=300)
-plt.savefig("../Results/umap_comparison_all_DLPFC.png")
+# # #绘制批次校正后的umap图
+# # fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
+# # # sc.pp.neighbors(multiple_adata, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
+# # # sc.tl.umap(multiple_adata,random_state=666)
+# # # sc.pl.umap(multiple_adata, color='sample_name', title='Uncorrected', ax=ax_list[0], show=False)
+# # sc.pp.neighbors(multiple_adata, use_rep='DeepST_embed',random_state=666) 
+# # sc.tl.umap(multiple_adata,random_state=666)
+# # sc.pl.umap(multiple_adata, color='sample_name', ax=ax_list[0], title='Batch corrected', show=False)
+# # sc.pl.umap(multiple_adata, color='DeepST_refine_domain', ax=ax_list[1], title='Colored by clusters', show=False)
+# # sc.pl.umap(multiple_adata, color='ground_truth', ax=ax_list[2], title='celltype', show=False)
+# # plt.tight_layout(w_pad=0.05)
+# # #plt.savefig(os.path.join(save_path, f'{"_".join(data_name_list)}_umap.pdf'), bbox_inches='tight', dpi=300)
+# # plt.savefig("../Results/umap_comparison_all_DLPFC.png")
 
 
-#用scib进行基准测试
-import scib
-scib.me.graph_connectivity(multiple_adata, label_key="sample_name")
-scib.me.ilisi_graph(multiple_adata, batch_key="sample_name",type_="embed",use_rep="DeepST_embed")
-scib.me.kBET(multiple_adata, batch_key="sample_name", label_key="ground_truth", type_="embed", embed="DeepST_embed")
-scib.me.silhouette_batch(multiple_adata, batch_key="sample_name", label_key="ground_truth", embed="DeepST_embed")#绘制每个数据集的空间图
-
-
-#for data_name in data_name_list:
-	#adata = multiple_adata[multiple_adata.obs["batch_name"]==data_name]
-	#sc.pl.spatial(adata, color='DeepST_refine_domain', frameon = False, spot_size=150)
-	#plt.savefig(os.path.join(save_path, f'{data_name}_domains.pdf'), bbox_inches='tight', dpi=300)
+# # #用scib进行基准测试
+# # import scib
+# # scib.me.graph_connectivity(multiple_adata, label_key="sample_name")
+# # scib.me.ilisi_graph(multiple_adata, batch_key="sample_name",type_="embed",use_rep="DeepST_embed")
+# # scib.me.kBET(multiple_adata, batch_key="sample_name", label_key="ground_truth", type_="embed", embed="DeepST_embed")
+# # scib.me.silhouette_batch(multiple_adata, batch_key="sample_name", label_key="ground_truth", embed="DeepST_embed")#绘制每个数据集的空间图

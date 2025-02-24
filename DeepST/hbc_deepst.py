@@ -14,7 +14,6 @@ data_path = "../../RAW_SLICE/hbc"
 data_name_list = ['section1', 'section2']
 save_path = "../results_bc" 
 n_domains = 14
-#初始化 DeepST 对象
 deepen = run(save_path = save_path, 
 	task = "Integration",
 	pre_epochs = 800, 
@@ -55,20 +54,20 @@ multiple_adata = deepen._get_cluster_data(multiple_adata, n_domains=n_domains, p
 multiple_adata.write("../Results/adata_DeepST.h5ad")
 adata_DeepST = ad.read_h5ad("../Results/adata_DeepST.h5ad")
 
-fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
-sc.pp.neighbors(adata_DeepST, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
-sc.tl.umap(adata_DeepST,random_state=666)
-sc.pl.umap(adata_DeepST, color='new_batch', ax=ax_list[0], title='RAW_uncorrected', show=False)
-sc.pp.neighbors(adata_DeepST, use_rep='DeepST_embed',random_state=666)
-sc.tl.umap(adata_DeepST,random_state=666)
-sc.pl.umap(adata_DeepST, color='new_batch', ax=ax_list[1], title='Batch corrected', show=False)
-sc.pl.umap(adata_DeepST, color='DeepST_refine_domain', ax=ax_list[2], title='cluster_leiden', show=False)
-plt.tight_layout(w_pad=0.05)
-plt.savefig(os.path.join(save_path, f'{"_".join(data_name_list)}_umap.pdf'), bbox_inches='tight', dpi=600)
+# # fig, ax_list = plt.subplots(1, 3, figsize=(12, 4))
+# # sc.pp.neighbors(adata_DeepST, use_rep='X', n_neighbors=10, n_pcs=40,random_state=666)
+# # sc.tl.umap(adata_DeepST,random_state=666)
+# # sc.pl.umap(adata_DeepST, color='new_batch', ax=ax_list[0], title='RAW_uncorrected', show=False)
+# # sc.pp.neighbors(adata_DeepST, use_rep='DeepST_embed',random_state=666)
+# # sc.tl.umap(adata_DeepST,random_state=666)
+# # sc.pl.umap(adata_DeepST, color='new_batch', ax=ax_list[1], title='Batch corrected', show=False)
+# # sc.pl.umap(adata_DeepST, color='DeepST_refine_domain', ax=ax_list[2], title='cluster_leiden', show=False)
+# # plt.tight_layout(w_pad=0.05)
+# # plt.savefig(os.path.join(save_path, f'{"_".join(data_name_list)}_umap.pdf'), bbox_inches='tight', dpi=600)
 
-import scib
-sc.pp.neighbors(adata_DeepST, use_rep='DeepST_embed')
-scib.me.graph_connectivity(adata_DeepST, label_key="DeepST_refine_domain")
-scib.me.ilisi_graph(adata_DeepST, batch_key="new_batch",type_="embed",use_rep="DeepST_embed")
-scib.me.kBET(adata_DeepST, batch_key="new_batch", label_key="DeepST_refine_domain", type_="embed", embed="DeepST_embed")
-scib.me.silhouette_batch(adata_DeepST, batch_key="new_batch", label_key="DeepST_refine_domain", embed="DeepST_embed")#绘制每个数据集的空间图
+# # import scib
+# # sc.pp.neighbors(adata_DeepST, use_rep='DeepST_embed')
+# # scib.me.graph_connectivity(adata_DeepST, label_key="DeepST_refine_domain")
+# # scib.me.ilisi_graph(adata_DeepST, batch_key="new_batch",type_="embed",use_rep="DeepST_embed")
+# # scib.me.kBET(adata_DeepST, batch_key="new_batch", label_key="DeepST_refine_domain", type_="embed", embed="DeepST_embed")
+# # scib.me.silhouette_batch(adata_DeepST, batch_key="new_batch", label_key="DeepST_refine_domain", embed="DeepST_embed")#绘制每个数据集的空间图
