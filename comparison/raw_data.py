@@ -241,7 +241,7 @@ for dataset in datasets:
     # read the annotation
     Ann_df = pd.read_csv(os.path.join(file_fold, dataset, dataset + '_truth.csv'), sep=',', header=0, index_col=0)
     Ann_df.index = Ann_df.index.str.replace(r'^[A-Za-z]+-', '', regex=True)
-    Ann_df.index = Ann_df.index.str.strip()  # 去掉空格
+    Ann_df.index = Ann_df.index.str.strip()
     missing_barcodes = set(adata.obs_names) - set(Ann_df.index)
     if missing_barcodes:
         print(f"Missing barcodes: {missing_barcodes}") 
@@ -252,7 +252,7 @@ for dataset in datasets:
     adata.obs['ground_truth'] = cell_info_new
     adata = adata[adata.obs['ground_truth'] != 'unknown']
     adata.obs_names = [x+'_'+dataset for x in adata.obs_names]
-    adata.obs['batch'] = dataset  # Add batch information
+    adata.obs['batch'] = dataset
     # Normalization
     sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=5000)
     sc.pp.normalize_total(adata, target_sum=1e4)

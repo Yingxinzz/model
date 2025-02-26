@@ -26,9 +26,11 @@ df.to_csv('../results/scib_all_samples.csv', index=False)
 df = pd.read_csv('../results/scib_all_samples.csv')
 metrics = ['graph_connectivity', 'iLISI', 'kBET', 'ASW']
 weights = {
-    'DeepST': 7, 'PRECAST': 7, 'STitch3D': 5, 'STAligner': 8, 'GraphST': 8,
-    'spatiAlign': 8, 'SPIRAL': 8
+    'RAW': 8, 'DeepST': 7, 'PRECAST': 7, 'STitch3D': 5, 'STAligner': 8, 'GraphST': 8,
+    'Spatialign': 8, 'SPIRAL': 8
 }
+
+
 # Kruskal-Wallis test and weighted means
 results = {}
 mean_values = {}
@@ -50,6 +52,7 @@ models = df['Model'].unique()
 num_models = len(models)
 angles = np.linspace(0, 2 * np.pi, num_models, endpoint=False).tolist()
 angles += angles[:1]  # Close the plot
+
 fig, ax = plt.subplots(figsize=(10, 8), subplot_kw={'projection': 'polar'})
 ax.set_theta_offset(np.pi / 2)
 ax.set_theta_direction(-1)
@@ -70,7 +73,8 @@ for i, label in enumerate(models):
 
 #colors =["#018A67", "#1868B2", "#DE582B", "#F3A332"]
 #colors =["#4DBBD5","#00A087","#105573","#A7EBB2"]
-colors=["#018A67", "#F5B3A5", "#D693BE","#5DBFE9"]
+#colors=["#018A67", "#F5B3A5", "#D693BE","#5DBFE9"]
+colors = ["#FF0000", "#008000","#0000FF","#FFFF00" ]
 
 for metric, color in zip(metrics, colors):
     values = list(mean_values[metric].values())
@@ -92,3 +96,39 @@ plt.savefig('../results/combined_radar_plot_full.png',dpi=300)
 # 保存 Kruskal-Wallis 检验结果
 results_df = pd.DataFrame(list(results.items()), columns=['Metric', 'p-value'])
 results_df.to_csv('../results/kruskal_wallis_results.csv', index=False)
+
+
+import numpy as np
+import pandas as pd
+
+# 权重
+weights = {'RAW': 8, 'DeepST': 7, 'PRECAST': 7, 'STitch3D': 5, 'STAligner': 8, 'GraphST': 8,'Spatialign': 8, 'SPIRAL': 8
+}
+# 读取数据
+df = pd.read_csv('../results/scib_all_samples.csv')
+
+# 获取唯一的模型列表
+models = df['Model'].unique()
+
+# 加权平均计算函数
+def calculate_weighted_averages(df, weights):
+    weighted_averages = {}
+    for model in models:
+        # 过滤出每个模型的数据
+        model_data = df[df['Model'] == model].iloc[:, 1:-1] 
+        if model not in weights:
+            continue  # 如果模型不在权重字典中，则跳过
+        # 获取该模型的权重
+        model_weight = weights.get(model, 1)
+        # 计算加权平均
+        weighted_avg = (model_data * model_weight).sum().sum() / (model_data.size * model_weight)
+        # 保存加权均值
+        weighted_averages[model] = weighted_avg
+    return weighted_averages
+
+# 计算加权均值
+weighted_averages = calculate_weighted_averages(df, weights)
+
+# 将加权均值结果保存为 CSV 文件
+weighted_averages_df = pd.DataFrame(list(weighted_averages.items()), columns=["Model", "Weighted Average"])
+weighted_averages_df.to_csv('../results/weighted_averages.csv', index=False)
