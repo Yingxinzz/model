@@ -1,9 +1,16 @@
 Towards a Better Understanding of batch effects in Spatial Transcriptomics: Definition and Method Evaluation
 
+![Workflow](workflow.png.png)
 
-Background: Spatial transcriptomics (ST) enables high-resolution mapping of gene expression within tissue slices, providing detailed insights into tissue architecture and cellular interactions. However, ST is often affected by batch effects, which stem from non-biological variations in sample collection, processing, sequencing platforms, or experimental protocols. These batch effects obscure true biological signals, complicate data integration, and reduce the accuracy of downstream analyses. Despite their critical impact, the definition and systematic evaluation of batch effects in ST datasets remain poorly tackled. To address this gap, we propose a comprehensive framework to define batch effects in ST and systematically evaluate the performance of ST methods with batch effects correction capabilities.
+
+
+Spatial transcriptomics (ST) enables high-resolution mapping of gene expression within tissue slices, providing detailed insights into tissue architecture and cellular interactions. However, ST is often affected by batch effects, which stem from non-biological variations in sample collection, processing, sequencing platforms, or experimental protocols. These batch effects obscure true biological signals, complicate data integration, and reduce the accuracy of downstream analyses. Despite their critical impact, the definition and systematic evaluation of batch effects in ST datasets remain poorly tackled. To address this gap, we propose a comprehensive framework to define batch effects in ST and systematically evaluate the performance of ST methods with batch effects correction capabilities.
+
+We define batch effects in ST into four types based on their sources: (1) Inter-slice, (2)Inter-sample, (3) Cross-protocol/platform, and (4) Intra-slice. We assessed seven representative ST integration approaches: DeepST, STAligner, GraphST, STitch3D, PRECAST, spatiAlign, and SPIRAL, using benchmark datasets derived from human and mouse tissue samples. These methods were evaluated using a series of metrics—Graph connectivity(GC), kBET, ASW, and iLISI—in terms of both the preservation of biologically meaningful neighborhoods and effective batch mixing, thereby comprehensively validating the removal of batch effects. We also apply STAligner to perform downstream analysis before and after batch effects removal, further highlighting the importance of batch correction in ST analysis
+
 
 Datasets:
+
 Dataset1 consists of 12 human DLPFC sections, available at
 https://research.libd.org/spatialLIBD/ with manual annotation
 
@@ -22,7 +29,9 @@ Datasets4 consists of 3 slices from 3 different experimental protocols: ”10Nor
 adult-mouse-brain-section-1-coronal-stains-dapi-anti-neu-n-1-standard-1-1-0,
 ”10X-FFPE”:https://www.10xgenomics.com/datasets/adult-mouse-brain-ffpe-1-standard-1-3-0X
 
+
 Methods:
+
 GraphST: https://github.com/JinmiaoChenLab/GraphST/tree/main
 
 DeepST: https://github.com/JiangBioLab/DeepST
