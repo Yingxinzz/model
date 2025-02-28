@@ -1,6 +1,6 @@
 Towards a Better Understanding of batch effects in Spatial Transcriptomics: Definition and Method Evaluation
 
-![Workflow](workflow.png.png)
+![Workflow](workflow.png)
 
 
 We define batch effects in ST into four types based on their sources: (1) Inter-slice, (2)Inter-sample, (3) Cross-protocol/platform, and (4) Intra-slice. We assessed seven representative ST integration approaches: DeepST, STAligner, GraphST, STitch3D, PRECAST, spatiAlign, and SPIRAL, using benchmark datasets derived from human and mouse tissue samples. These methods were evaluated using a series of metrics—Graph connectivity(GC), kBET, ASW, and iLISI—in terms of both the preservation of biologically meaningful neighborhoods and effective batch mixing, thereby comprehensively validating the removal of batch effects. We also apply STAligner to perform downstream analysis before and after batch effects removal, further highlighting the importance of batch correction in ST analysis
