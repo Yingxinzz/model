@@ -8,23 +8,18 @@ We define batch effects in ST into four types based on their sources: (1) Inter-
 
 Datasets:
 
-Dataset1 consists of 12 human DLPFC sections, available at
-https://research.libd.org/spatialLIBD/ with manual annotation
+Dataset1 consists of 12 human DLPFC sections, available at https://research.libd.org/spatialLIBD/ with manual annotation
 
-Dataset2 consists of Block A Section 1: https://support.10xgenomics.com/spatial-gene-expression/
-datasets/1.1.0/V1_Breast_Cancer_Block_A_Section_1, Block A Section
-2:https://support.10xgenomics.com/spatial-gene-expression/datasets/1.1.0/V1_Breast_Cancer_
-Block_A_Section_2
+Dataset2 consists of Block A Section 1:  https://support.10xgenomics.com/spatial-gene-expression/datasets/1.1.0/V1_Breast_Cancer_Block_A_Section_1; 
+Block A Section 2:https://support.10xgenomics.com/spatial-gene-expression/datasets/1.1.0/V1_Breast_Cancer_Block_A_Section_2
 
-Dataset3 consists of 3 slices from 3 different platforms: 10X:
-https://www.10xgenomics.com/datasets/adult-mouse-olfactory-bulb-1-standards, The processed
-Stereo-seq and Slide-seqV2 data can be downloaded from:https:
-//drive.google.com/drive/folders/1Omte1adVFzyRDw7VloOAQYwtv_NjdWcG?usp=share_link.
+Dataset3 consists of 3 slices from 3 different platforms: 
+10X: https://www.10xgenomics.com/datasets/adult-mouse-olfactory-bulb-1-standards;
+The processed Stereo-seq and Slide-seqV2 data can be downloaded from: https://drive.google.com/drive/folders/1Omte1adVFzyRDw7VloOAQYwtv_NjdWcG?usp=share_link.
 
-Datasets4 consists of 3 slices from 3 different experimental protocols: ”10Normal”https://www.10xgenomics.com/datasets/mouse-brain-section-coronal-1-standard-1-1-0,
-”10X-DAPI”:https://www.10xgenomics.com/datasets/
-adult-mouse-brain-section-1-coronal-stains-dapi-anti-neu-n-1-standard-1-1-0,
-”10X-FFPE”:https://www.10xgenomics.com/datasets/adult-mouse-brain-ffpe-1-standard-1-3-0X
+Datasets4 consists of 3 slices from 3 different experimental protocols: "10Normal" https://www.10xgenomics.com/datasets/mouse-brain-section-coronal-1-standard-1-1-0;
+"10X-DAPI":https://www.10xgenomics.com/datasets/adult-mouse-brain-section-1-coronal-stains-dapi-anti-neu-n-1-standard-1-1-0;
+"10X-FFPE":https://www.10xgenomics.com/datasets/adult-mouse-brain-ffpe-1-standard-1-3-0X.
 
 
 Methods:
