@@ -1,4 +1,4 @@
-Towards a Better Understanding of batch effects in Spatial Transcriptomics: Definition and Method Evaluation
+# Towards a Better Understanding of batch effects in Spatial Transcriptomics: Definition and Method Evaluation
 
 ![Workflow](workflow.png)
 
