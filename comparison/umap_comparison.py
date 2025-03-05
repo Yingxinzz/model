@@ -3,6 +3,7 @@ import umap
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+import anndata as ad
 warnings.filterwarnings("ignore")
 
 reducer = umap.UMAP(
@@ -33,9 +34,6 @@ def create_layer_palette(adata):
     else:
         print(f"No 'layer' column found in {adata}. Using default palette.")
         return sns.color_palette("Set2", n_colors=10)  # Default to 10 colors if 'layer' is missing
-
-import matplotlib.pyplot as plt
-import scanpy as sc
 
 def plot_all_umaps():
     spot_size = 100
@@ -168,34 +166,42 @@ def plot_all_umaps():
     sc.pp.neighbors(adata_raw, use_rep='X', random_state=666)
     sc.tl.umap(adata_raw, random_state=666)
     sc.pl.umap(adata_raw, color='batch', title='RAW_Uncorrected', ax=ax_list[0], show=False)
+    ax_list[0].set_title('RAW_Uncorrected', fontsize=30)
     
     sc.pp.neighbors(adata_PRECAST, use_rep='PRECAST', random_state=666)
     sc.tl.umap(adata_PRECAST, random_state=666)
     sc.pl.umap(adata_PRECAST, color='new_batch', ax=ax_list[1], title='PRECAST', show=False)
+    ax_list[1].set_title('PRECAST', fontsize=30)
     
     sc.pp.neighbors(adata_DeepST, use_rep='DeepST_embed', random_state=666)
     sc.tl.umap(adata_DeepST, random_state=666)
     sc.pl.umap(adata_DeepST, color='batch_name', ax=ax_list[2], title='DeepST', show=False)
+    ax_list[2].set_title('DeepST', fontsize=30)
     
     sc.pp.neighbors(adata_STAligner, use_rep='STAligner', random_state=666)
     sc.tl.umap(adata_STAligner, random_state=666)
     sc.pl.umap(adata_STAligner, color='batch_name', title='STAligner', ax=ax_list[3], show=False)
+    ax_list[3].set_title('STAligner', fontsize=30)    
     
     sc.pp.neighbors(adata_GraphST, use_rep='emb_pca', n_neighbors=10, random_state=666)
     sc.tl.umap(adata_GraphST, random_state=666)
     sc.pl.umap(adata_GraphST, color='new_batch', ax=ax_list[4], title='GraphST', show=False)
+    ax_list[4].set_title('GraphST', fontsize=30)
     
     sc.pp.neighbors(adata_SPIRAL, use_rep='spiral', random_state=666)
     sc.tl.umap(adata_SPIRAL, random_state=666)
     sc.pl.umap(adata_SPIRAL, color='batch', ax=ax_list[5], title='SPIRAL', show=False)
+    ax_list[5].set_title('SPIRAL', fontsize=30)
     
     sc.pp.neighbors(adata_STitch3D, use_rep='latent', n_neighbors=30, random_state=666)
     adata_STitch3D.obsm['X_umap'] = reducer.fit_transform(adata_STitch3D.obsm['latent'])
     sc.pl.umap(adata_STitch3D, color='slice_id', title='STitch3D', ax=ax_list[6], show=False)
+    ax_list[6].set_title('STitch3D', fontsize=30)
     
     sc.pp.neighbors(adata_Spatialign, use_rep='correct', random_state=666)
     sc.tl.umap(adata_Spatialign, random_state=666)
     sc.pl.umap(adata_Spatialign, color='new_batch', ax=ax_list[7], title='Spatialign', show=False)
+    ax_list[7].set_title('Spatialign', fontsize=30)
     ax_list[0].text(0.05, 1.05, 'E', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
     # ---- B 部分：Layer 对比图 ----
     layer_palette_raw = create_layer_palette(adata_raw)
@@ -214,6 +220,14 @@ def plot_all_umaps():
     sc.pl.umap(adata_SPIRAL, color='celltype', ax=ax_list[13], palette=layer_palette_SPIRAL, title='SPIRAL', show=False)
     sc.pl.umap(adata_STitch3D, color='layer', ax=ax_list[14], palette=layer_palette_STitch3D, title='STitch3D', show=False)
     sc.pl.umap(adata_Spatialign, color='celltype', ax=ax_list[15], palette=layer_palette_Spatialign, title='Spatialign', show=False)
+    ax_list[8].set_title('RAW', fontsize=30)
+    ax_list[9].set_title('PRECAST', fontsize=30)
+    ax_list[10].set_title('DeepST', fontsize=30)
+    ax_list[11].set_title('STAligner', fontsize=30)
+    ax_list[12].set_title('GraphST', fontsize=30)
+    ax_list[13].set_title('SPIRAL', fontsize=30)
+    ax_list[14].set_title('STitch3D', fontsize=30)
+    ax_list[15].set_title('Spatialign', fontsize=30)
     ax_list[8].text(0.05, 1.05, 'F', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[8].transAxes)
     # ---- C 部分：Clustering 对比图 ----
     sc.pl.umap(adata_raw, color='mclust', ax=ax_list[16], title='RAW', show=False)
@@ -223,7 +237,15 @@ def plot_all_umaps():
     sc.pl.umap(adata_GraphST, color='domain', ax=ax_list[20], title='GraphST', show=False)
     sc.pl.umap(adata_SPIRAL, color='mclust', ax=ax_list[21], title='SPIRAL_mclust', show=False)
     sc.pl.umap(adata_STitch3D, color='Cluster', ax=ax_list[22], title='STitch3D_GM', show=False)
-    sc.pl.umap(adata_Spatialign, color='mclust', ax=ax_list[23], title='Spatialign_GM', show=False)    
+    sc.pl.umap(adata_Spatialign, color='mclust', ax=ax_list[23], title='Spatialign_GM', show=False)
+    ax_list[16].set_title('RAW', fontsize=30)
+    ax_list[17].set_title('PRECAST_leiden', fontsize=30)
+    ax_list[18].set_title('DeepST', fontsize=30)
+    ax_list[19].set_title('STAligner_mclust', fontsize=30)
+    ax_list[20].set_title('GraphST', fontsize=30)
+    ax_list[21].set_title('SPIRAL_mclust', fontsize=30)
+    ax_list[22].set_title('STitch3D_GM', fontsize=30)
+    ax_list[23].set_title('Spatialign_GM', fontsize=30)
     ax_list[16].text(0.05, 1.05, 'G', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[16].transAxes)
     # ---- D 部分：Spatial 对比图 ----
     sc.pl.spatial(adata_raw, color='mclust', ax=ax_list[24], title='RAW', spot_size=spot_size, cmap='viridis', show=False)
@@ -234,7 +256,14 @@ def plot_all_umaps():
     sc.pl.spatial(adata_SPIRAL, color='mclust', ax=ax_list[29], title='SPIRAL', spot_size=spot_size, cmap='viridis', show=False)
     sc.pl.spatial(adata_STitch3D, color='Cluster', ax=ax_list[30], title='STitch3D', spot_size=spot_size, cmap='viridis', show=False)
     sc.pl.spatial(adata_Spatialign, color='mclust', ax=ax_list[31], title='Spatialign', spot_size=spot_size, cmap='viridis', show=False)
-    
+    ax_list[24].set_title('RAW', fontsize=30)
+    ax_list[25].set_title('PRECAST', fontsize=30)
+    ax_list[26].set_title('DeepST', fontsize=30)
+    ax_list[27].set_title('STAligner', fontsize=30)
+    ax_list[28].set_title('GraphST', fontsize=30)
+    ax_list[29].set_title('SPIRAL', fontsize=30)
+    ax_list[30].set_title('STitch3D', fontsize=30)
+    ax_list[31].set_title('Spatialign', fontsize=30)
     ax_list[24].text(0.05, 1.05, 'H', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[24].transAxes)
     handles, labels = ax_list[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='center left', bbox_to_anchor=(1.05, 0.5), ncol=1)
