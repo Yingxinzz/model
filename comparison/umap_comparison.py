@@ -159,14 +159,14 @@ def create_layer_palette(adata):
 
 def plot_all_umaps():
     spot_size = 100
-    fig, ax_list = plt.subplots(4, 8, figsize=(40, 20))
+    fig, ax_list = plt.subplots(4, 8, figsize=(44, 20))
     ax_list = ax_list.flatten()
     plt.subplots_adjust(hspace=1.0, wspace=0.4)
     # ---- A 部分：UMAP 图 ----
     sc.pp.neighbors(adata_raw, use_rep='X', random_state=666)
     sc.tl.umap(adata_raw, random_state=666)
-    sc.pl.umap(adata_raw, color='batch', title='RAW_Uncorrected', ax=ax_list[0], show=False)
-    ax_list[0].set_title('RAW_Uncorrected', fontsize=30)
+    sc.pl.umap(adata_raw, color='batch', title='RAW', ax=ax_list[0], show=False)
+    ax_list[0].set_title('RAW', fontsize=30)
     
     sc.pp.neighbors(adata_PRECAST, use_rep='PRECAST', random_state=666)
     sc.tl.umap(adata_PRECAST, random_state=666)
@@ -202,7 +202,7 @@ def plot_all_umaps():
     sc.tl.umap(adata_Spatialign, random_state=666)
     sc.pl.umap(adata_Spatialign, color='new_batch', ax=ax_list[7], title='Spatialign', show=False)
     ax_list[7].set_title('Spatialign', fontsize=30)
-    ax_list[0].text(0.05, 1.05, 'E', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
+    ax_list[0].text(0.05, 1.05, 'A', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
     # ---- B 部分：Layer 对比图 ----
     layer_palette_raw = create_layer_palette(adata_raw)
     layer_palette_PRECAST = create_layer_palette(adata_PRECAST)
@@ -228,7 +228,7 @@ def plot_all_umaps():
     ax_list[13].set_title('SPIRAL', fontsize=30)
     ax_list[14].set_title('STitch3D', fontsize=30)
     ax_list[15].set_title('Spatialign', fontsize=30)
-    ax_list[8].text(0.05, 1.05, 'F', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[8].transAxes)
+    ax_list[8].text(0.05, 1.05, 'B', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[8].transAxes)
     # ---- C 部分：Clustering 对比图 ----
     sc.pl.umap(adata_raw, color='mclust', ax=ax_list[16], title='RAW', show=False)
     sc.pl.umap(adata_PRECAST, color='cluster', ax=ax_list[17], title='PRECAST_leiden', show=False)
@@ -246,7 +246,7 @@ def plot_all_umaps():
     ax_list[21].set_title('SPIRAL_mclust', fontsize=30)
     ax_list[22].set_title('STitch3D_GM', fontsize=30)
     ax_list[23].set_title('Spatialign_GM', fontsize=30)
-    ax_list[16].text(0.05, 1.05, 'G', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[16].transAxes)
+    ax_list[16].text(0.05, 1.05, 'C', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[16].transAxes)
     # ---- D 部分：Spatial 对比图 ----
     sc.pl.spatial(adata_raw, color='mclust', ax=ax_list[24], title='RAW', spot_size=spot_size, cmap='viridis', show=False)
     sc.pl.spatial(adata_PRECAST, color='cluster', ax=ax_list[25], title='PRECAST', spot_size=spot_size, cmap='viridis', show=False)
@@ -264,7 +264,7 @@ def plot_all_umaps():
     ax_list[29].set_title('SPIRAL', fontsize=30)
     ax_list[30].set_title('STitch3D', fontsize=30)
     ax_list[31].set_title('Spatialign', fontsize=30)
-    ax_list[24].text(0.05, 1.05, 'H', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[24].transAxes)
+    ax_list[24].text(0.05, 1.05, 'D', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[24].transAxes)
     handles, labels = ax_list[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='center left', bbox_to_anchor=(1.05, 0.5), ncol=1)
     plt.tight_layout(rect=[0, 0, 1, 1])
@@ -297,8 +297,8 @@ def plot_all_umaps():
     # ---- A 部分：UMAP 图 ----
     sc.pp.neighbors(adata_raw, use_rep='X', random_state=666)
     sc.tl.umap(adata_raw, random_state=666)
-    sc.pl.umap(adata_raw, color='batch', title='RAW_Uncorrected', ax=ax_list[0], show=False)
-    ax_list[0].set_title('RAW_Uncorrected', fontsize=30)
+    sc.pl.umap(adata_raw, color='batch', title='RAW', ax=ax_list[0], show=False)
+    ax_list[0].set_title('RAW', fontsize=30)
     sc.pp.neighbors(adata_PRECAST, use_rep='PRECAST', random_state=666)
     sc.tl.umap(adata_PRECAST, random_state=666)
     sc.pl.umap(adata_PRECAST, color='new_batch', ax=ax_list[1], show=False)
@@ -327,7 +327,7 @@ def plot_all_umaps():
     sc.tl.umap(adata_Spatialign, random_state=666)
     sc.pl.umap(adata_Spatialign, color='new_batch', ax=ax_list[7], show=False)
     ax_list[7].set_title('Spatialign', fontsize=30)
-    ax_list[0].text(0.05, 1.05, 'I', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
+    ax_list[0].text(0.05, 1.05, 'A', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
     # ---- B 部分：Layer 对比图 ----
     layer_palette_raw = create_layer_palette(adata_raw)
     layer_palette_PRECAST = create_layer_palette(adata_PRECAST)
@@ -353,7 +353,7 @@ def plot_all_umaps():
     ax_list[14].set_title('STitch3D', fontsize=30)
     sc.pl.umap(adata_Spatialign, color='celltype', ax=ax_list[15], palette=layer_palette_Spatialign, show=False)
     ax_list[15].set_title('Spatialign', fontsize=30)
-    ax_list[8].text(0.05, 1.05, 'J', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[8].transAxes)
+    ax_list[8].text(0.05, 1.05, 'B', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[8].transAxes)
     # ---- C 部分：Clustering 对比图 ----
     sc.pl.umap(adata_raw, color='mclust', ax=ax_list[16], show=False)
     ax_list[16].set_title('RAW', fontsize=30)
@@ -371,7 +371,7 @@ def plot_all_umaps():
     ax_list[22].set_title('STitch3D_GM', fontsize=30)
     sc.pl.umap(adata_Spatialign, color='mclust', ax=ax_list[23], show=False)
     ax_list[23].set_title('Spatialign_GM', fontsize=30)
-    ax_list[16].text(0.05, 1.05, 'K', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[16].transAxes)
+    ax_list[16].text(0.05, 1.05, 'C', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[16].transAxes)
     # ---- D 部分：Spatial 对比图 ----
     sc.pl.spatial(adata_raw, color='mclust', ax=ax_list[24], spot_size=spot_size, cmap='viridis', show=False)
     ax_list[24].set_title('RAW', fontsize=30)
@@ -389,7 +389,7 @@ def plot_all_umaps():
     ax_list[30].set_title('STitch3D', fontsize=30)
     sc.pl.spatial(adata_Spatialign, color='mclust', ax=ax_list[31], spot_size=spot_size, cmap='viridis', show=False)
     ax_list[31].set_title('Spatialign', fontsize=30)
-    ax_list[24].text(0.05, 1.05, 'L', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[24].transAxes)
+    ax_list[24].text(0.05, 1.05, 'D', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[24].transAxes)
     handles, labels = ax_list[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='center left', bbox_to_anchor=(1.05, 0.5), ncol=1)
     plt.tight_layout(rect=[0, 0, 1, 1])
