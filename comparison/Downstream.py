@@ -163,7 +163,7 @@ ax_list = ax_list.flatten()
 ax_list[0].text(0.05, 1.05, 'A', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[0].transAxes)
 sc.pp.neighbors(adata_raw, use_rep='X', random_state=22)
 sc.tl.umap(adata_raw, random_state=22)
-umap_titles = ['uncorrected', 'RAW_Ground_Truth', 'RAW_mclust']
+umap_titles = ['uncorrected', 'RAW-Ground Truth', 'RAW-clusters']
 umap_colors = ['batch_name', 'celltype', 'mclust']
 for i, title in enumerate(umap_titles):
     sc.pl.umap(adata_raw, color=umap_colors[i], title=title, ax=ax_list[i], show=False)
@@ -178,7 +178,7 @@ sc.pl.spatial (adata_raw,color='mclust',title='RAW spatial cluster', ax=ax_list[
 ax_list[7].text(0.05, 1.05, 'B', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[7].transAxes)
 sc.pp.neighbors(adata, use_rep='STAligner', random_state=22)
 sc.tl.umap(adata, random_state=22)
-umap_titles_corrected = ['corrected', 'Ground Truth', 'Colored by clusters']
+umap_titles_corrected = ['corrected', 'Ground Truth', 'clusters']
 umap_colors_corrected = ['batch_name', 'Ground Truth', 'mclust']
 for i, title in enumerate(umap_titles_corrected):
     sc.pl.umap(adata, color=umap_colors_corrected[i], title=title, ax=ax_list[7 + i], show=False)
