@@ -137,10 +137,38 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
+from sklearn.metrics import adjusted_rand_score
+from scipy.optimize import linear_sum_assignment
 
-adata=sc.read_h5ad('../STAligner/results/12_staligner_DLPFC.h5ad')
-adata_raw=sc.read('raw_adata_12.h5ad')
+import scanpy as sc
+import pandas as pd
+adata_raw = sc.read_h5ad('raw_adata_12.h5ad')
+label_mapping = {
+    '0': '1',
+    '1': '2',
+    '2': '3',
+    '3': '4',
+    '4': '5',
+    '5': '6',
+    '6': '7'
+}
+adata_raw.obs['mclust'] = adata_raw.obs['mclust'].astype(str).map(label_mapping)
 df=pd.read_csv('../STAligner/results/12_dlpfc_model_performance_results.csv')
+adata = sc.read_h5ad('../STAligner/results/12_staligner_DLPFC.h5ad')
+# label_mapping = {
+#     '1': '1',
+#     '2': '3',
+#     '3': '4',
+#     '4': '7',
+#     '5': '2',
+#     '6': '5',
+#     '7': '6'
+# }
+# adata.obs['mclust'] = adata.obs['mclust'].astype(str).map(label_mapping)
+# desired_order = list(label_mapping.values())
+# adata.obs['mclust'] = pd.Categorical(adata.obs['mclust'], categories=desired_order, ordered=True)
+# print("调整后的顺序:", adata.obs['mclust'].cat.categories)
+adata.obs['mclust'] = adata.obs['mclust'].astype('category')
 
 
 fig, ax_list = plt.subplots(5, 7, figsize=(42, 30))  
@@ -180,9 +208,9 @@ sc.pl.spatial (adata,color='mclust',title='spatial_cluster', ax=ax_list[12], spo
 
 # ---- Part 2: Performance Metrics (1x4) ----
 # Bar plot for model performance
-colors = sns.color_palette("Set2", n_colors=df.shape[1] - 1)
+colors = sns.color_palette("Set1", n_colors=df.shape[1] - 1)
 df.set_index('Model').plot(kind='bar', ax=ax_list[6], width=0.6, color=colors)
-ax_list[6].set_ylabel("Score", fontsize=12, color="black")
+ax_list[6].set_ylabel("Score", fontsize=16, color="black")
 ax_list[6].tick_params(axis='x', rotation=45)
 ax_list[6].tick_params(axis='y')
 ax_list[6].legend(title="Metrics", bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -209,14 +237,19 @@ for i, model in enumerate(df["Model"]):
     ax_list[13].text(i, mean_value - 0.05, f'{mean_value:.2f}', horizontalalignment='center', color='black', fontsize=12)
 
 # ---- Part 3: Violin plots for gene expression (3x7) ----
-genes = ['CXCL14', 'HPCAL1', 'CARTPT', 'NEFL', 'PCP4', 'PLP1', 'MBP']
+from scipy import stats
+genes = ['CXCL14', 'HPCAL1', 'CARTPT', 'PVALB', 'PCP4', 'KRT17', 'MBP']
 for i, gene in enumerate(genes):
     sc.pl.violin(adata, keys=[gene], groupby='Ground_Truth', jitter=True, rotation=45, size=4, scale='width', ax=ax_list[14 + i])
     ax_list[14 + i].set_title(f'Ground_Truth - {gene}')
 
 ax_list[14].text(0.05, 1.05, 'E', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[14].transAxes)
+unique_mclust = adata.obs['mclust'].unique()
+palette = sns.color_palette("Set1", n_colors=len(unique_mclust))
+palette_dict = {str(mclust): color for mclust, color in zip(unique_mclust, palette)}
+
 for i, gene in enumerate(genes):
-    sc.pl.violin(adata, keys=[gene], groupby='mclust', jitter=True, rotation=45, size=4, scale='width', ax=ax_list[21 + i])
+    sc.pl.violin(adata, keys=[gene], groupby='mclust', jitter=True, rotation=45, size=4, scale='width', ax=ax_list[21 + i], palette=palette_dict)
     ax_list[21 + i].set_title(f'mclust - {gene}')
 
 ax_list[21].text(0.05, 1.05, 'F', ha='center', va='bottom', fontsize=32, fontweight='bold', transform=ax_list[21].transAxes)
@@ -229,3 +262,4 @@ plt.tight_layout()
 
 plt.savefig('../results/combined_figure.png')
 print('Saved combined figure as combined_figure.png')
+plt.savefig('../results/combined_figure.png')
